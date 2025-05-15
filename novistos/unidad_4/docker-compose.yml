@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: prueba_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: prueba_user
+      POSTGRES_PASSWORD: prueba_pass
+      POSTGRES_DB: prueba_db
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: prueba_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - ./pgadmin_data:/var/lib/pgadmin
+    ports:
+      - '8088:80'
+    depends_on:
+      - db
+
+
